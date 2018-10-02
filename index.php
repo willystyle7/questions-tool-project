@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,16 +12,26 @@
     <script src="scripts/titlebar.js"></script>
 </head>
 <body>
-    <?php
-        echo "Questions Tool Project";
+    <?php 
+        echo "Questions Tool Project".'<br>';
+        if (isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true) {
+            echo '<a href="logout.php">Logout</a>';
+            echo '<h3>List Questions</h3>';
+            // TODO List Questions
+        } else {
+            if (isset($_GET['error']) && $_GET['error'] == 1) {
+                echo "Wrong username or password";
+            }
+            ?>
+            <form action="login.php" method="post">
+                <input type="text" name="usrname" placeholder="Username"><br>
+                <input type="password" name="passwd" placeholder="Password"><br>
+                <input type="submit" name="Submit"><br>   
+            </form>
+            <a href="register.php">Register New User<a>
+            <?php
+        }
     ?>
-    <form action="index.php" method="get">
-        <input type="text" name="usrname" placeholder="Username"><br>
-        <input type="password" name="passwd" placeholder="Password"><br>
-        <input type="submit" name="Submit"><br>   
-    </form>
-    <?php
-        echo '<pre>'.print_r($_GET, true).'</pre>';
-    ?>
+    
 </body>
 </html>
