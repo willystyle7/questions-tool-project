@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('functions.php');
-//my_header('Questions Tool');
 
 if (isset($_SESSION['is_logged']) && $_SESSION['is_logged']==true) {
     header('Location: index.php');
@@ -52,16 +51,16 @@ if (isset($_POST['register']) && $_POST['register']=="Register") {
         } else {
             $sql = 'INSERT INTO users (username, password, email, full_name, date_registered, type, active) ';
             $sql .= 'VALUES ("'.$username.'", "'.md5($password).'", "'.$email.'", "'.$full_name.'", '.time().', 1, 1);';
-            echo $sql.PHP_EOL;
+            //echo $sql.PHP_EOL;
             $result = mysqli_query($link, $sql);
             if (!$result) {
                 //echo "Error with Database";
                 $error_array['db'] = 'Error with Database';
                 exit();
             }
-            $_SESSION['is_registered']=true;            
+            $_SESSION['is_registered'] = true;            
             header('Location: index.php');
-            exit;
+            exit();
         }
     }
 } 

@@ -1,8 +1,8 @@
 --
 -- Database: `c527willys`
 --
-CREATE DATABASE IF NOT EXISTS `db_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `db_name`;
+CREATE DATABASE IF NOT EXISTS `c527willys` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `c527willys`;
 
 --
 -- Table structure for table `users`

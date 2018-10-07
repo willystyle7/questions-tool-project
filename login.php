@@ -6,16 +6,24 @@ if (isset($_POST['login']) && $_POST['login']=="Login") {
     $username = addslashes(trim($_POST['username']));
     $password = trim($_POST['password']);    
     $link = db_init();
-    $sql = 'SELECT COUNT(*) as cnt FROM users WHERE username="'.$username.'" AND password="'.md5($password).'";';
+    $sql = 'SELECT * FROM users WHERE username="'.$username.'" AND password="'.md5($password).'";';
     $result = mysqli_query($link, $sql);
-    $row = mysqli_fetch_assoc($result);
-    //print_r($row);
-    if ($row['cnt'] == 1) {
-        $_SESSION['is_logged'] = true;
-        $_SESSION['user'] = $username;
-        header('Location: main.php');
-    } else {
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        //print_r($row);    
+        $_SESSION['user_info'] = $row;
+        if ($_SESSION['user_info']['active'] ==  1) {
+            $_SESSION['is_logged'] = true;
+            $_SESSION['ask_question'] = false;
+            header('Location: main.php');
+            exit();
+        } else {
+            $error_array['wrong_login'] = 'This user is suspended';
+        }        
+    } elseif (mysqli_num_rows($result) == 0) {
         $error_array['wrong_login'] = 'Wrong username or password';        
+    } else {
+        $error_array['db'] = 'Alert! DB has 2 or more users with same ID';
     }
 
 }

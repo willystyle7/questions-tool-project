@@ -24,15 +24,23 @@ function my_footer()
 
 function db_init()
 {
-    $link = mysqli_connect('url', 'user', 'password', 'db_name');
+    $link = mysqli_connect('url', 'root', 'password', 'database');
     if (!$link) {
         echo "Error: Unable to connect to MySQL." . PHP_EOL;
         echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
         echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
         $error_array['db'] = 'Error with Database';
         die('Error with Database');
-        exit;
+        exit();
     }    
     //echo "Success: A proper connection to MySQL was made!" . PHP_EOL;
     return $link;    
+}
+
+function get_username_by_id($id) {
+    $link = db_init();
+    $sql = 'SELECT * FROM users WHERE user_id="'.$id.'";';
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['username'];
 }
