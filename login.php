@@ -15,6 +15,7 @@ if (isset($_POST['login']) && $_POST['login']=="Login") {
         if ($_SESSION['user_info']['active'] ==  1) {
             $_SESSION['is_logged'] = true;
             $_SESSION['ask_question'] = false;
+            $_SESSION['show_filter'] = false;
             header('Location: main.php');
             exit();
         } else {
